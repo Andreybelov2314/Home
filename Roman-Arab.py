@@ -24,7 +24,6 @@ for i in number:
         i=int(i)
         result=roman.get(1)*i
         roman_number=roman_number+str(result)
-roman_2=roman_number
 roman_number = roman_number.replace('IIIII', 'V')
 roman_number = roman_number.replace('VIIII', 'IX')
 roman_number = roman_number.replace('IIII', 'IV')
@@ -32,11 +31,32 @@ roman_number= roman_number.replace('XXXXX', 'L')
 roman_number = roman_number.replace('LXXXX', 'XC')
 roman_number= roman_number.replace('XXXX', 'XL')
 print(roman_number)
-arab_number=0
-for i in roman_2:
-    number=int(arabic.get(i))
-    arab_number+=number
-print(arab_number)
+arab = input('введите арабское число: ')
+result = 0
+if len(arab) == 0:
+    print(0)
+elif len(arab) == 1:
+    print(arabic.get(arab))
+else:
+    previous = int(arabic.get(arab[0]))
+    current = int(arabic.get(arab[1]))
+    if previous >= current:
+        result = previous + current
+    else:
+        result = current - previous
+    for i in range(2, len(arab)):
+        previous = int(arabic.get(arab[i - 1]))
+        current = int(arabic.get(arab[i]))
+        if previous >= current:
+            result += current
+        else:
+            result = result + current - previous - previous
+    print(result)
+
+
+
+
+
 
 
 
