@@ -6,6 +6,12 @@ text='asjdfauewygd'
 vow=filter(lambda x: True if x in vowels else False, text)
 print(list(vow))
 print(list(filter(lambda x: True if x not in vowels else False, text)))
+
+print('-=======-')
+lst=["radar", "hello", "level", "world", "mam"]
+lamda_palindrome=filter(lambda x: True if x[::-1] == x[::1] and len(x)>3 else False, lst)
+print(list(lamda_palindrome))
+
 students = [
     {"name": "Alice", "age": 20, "grades": [85, 90, 78]},
     {"name": "Bob", "age": 22, "grades": [70, 65, 80]},
@@ -14,3 +20,4 @@ students = [
 ]
 middle=list(filter(lambda student: True if sum(student['grades'])/len(student['grades']) > 75 else False, students))
 print(middle)
+
