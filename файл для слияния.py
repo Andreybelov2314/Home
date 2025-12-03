@@ -1,0 +1,3 @@
+maximum=lambda lst:  (min(lst), max(lst), sum(lst)/len(lst))
+lst=[1,2,3,4,5,8,-1]
+print(maximum(lst))
