@@ -20,4 +20,30 @@ students = [
 ]
 middle=list(filter(lambda student: True if sum(student['grades'])/len(student['grades']) > 75 else False, students))
 print(middle)
+print("-============-")
+def arif(x):
+    lst=[]
+    signs='+-*/'
+    num=''
+    for i in x:
+        if i not in signs:
+            num+=i
+        elif i in signs:
+            lst.append(num)
+            num=i
+    if num not in lst:
+        lst.append(num)
+    result=int(lst[0])
+    for l in lst[1:]:
+        if l[0]=='+':
+            result+=int(l[1:])
+        elif l[0]=='-':
+            result-=int(l[1:])
+        elif l[0]=='*':
+            result=result*int(l[1:])
+        elif l[0]=='/':
+            result=result/int(l[1:])
+    return result
+alg=input("введите пример")
+print(arif(alg))
 
