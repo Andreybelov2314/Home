@@ -20,6 +20,7 @@ students = [
 ]
 middle=list(filter(lambda student: True if sum(student['grades'])/len(student['grades']) > 75 else False, students))
 print(middle)
+
 print('-=======-')
 def str_info(str):
     result= {}
@@ -42,4 +43,32 @@ def str_info(str):
     return result
 str="В 2023 году было продано 1500 iPhone 14 Pro и 2000 Samsung Galaxy S23. Цены варьировались от 79990 до 129990 рублей. Клиенты оставили 4.5 звезд из 5!"
 print(str_info(str))
+
+print("-============-")
+def arif(x):
+    lst=[]
+    signs='+-*/'
+    num=''
+    for i in x:
+        if i not in signs:
+            num+=i
+        elif i in signs:
+            lst.append(num)
+            num=i
+    if num not in lst:
+        lst.append(num)
+    result=int(lst[0])
+    for l in lst[1:]:
+        if l[0]=='+':
+            result+=int(l[1:])
+        elif l[0]=='-':
+            result-=int(l[1:])
+        elif l[0]=='*':
+            result=result*int(l[1:])
+        elif l[0]=='/':
+            result=result/int(l[1:])
+    return result
+alg=input("введите пример")
+print(arif(alg))
+
 
