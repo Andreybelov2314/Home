@@ -68,7 +68,40 @@ def arif(x):
         elif l[0]=='/':
             result=result/int(l[1:])
     return result
-alg=input("введите пример")
-print(arif(alg))
+#alg=input("введите пример")
+#print(arif(alg))
+print('-=============-')
+def code(x, str):
+    lst1=[]
+    update=''
+    result=''
+    for i in str:
+        if len(update)<len(x):
+            if i.isalpha():
+                update+=i
+            else:
+                pass
+        elif len(update)==len(x):
+            lst1.append(update)
+            update=i
+    if update not in lst1:
+        if len(update)==len(x):
+            lst1.append(update)
+        else:
+            while len(update)!=len(x):
+                update+='_'
+            lst1.append(update)
+    quanity=0
+    for i in lst1:
+        quanity+=1
+        if quanity%len(x)==0:
+            result+=' '
+        result+=''.join(sorted(i))
+    return result
+
+text='Andrey'
+keyword='lam'
+print(code(keyword,text))
+
 
 
