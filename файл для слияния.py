@@ -102,6 +102,73 @@ def code(x, str):
 text='Andrey'
 keyword='lam'
 print(code(keyword,text))
+print('-============')
+
+
+def string_three(total):
+    copy1 = [row[:] for row in total]
+    if len(copy1) < 3:
+        return copy1
+
+
+    for col in range(len(copy1[-1])):
+        if len(copy1) >= 3:
+
+            if (copy1[-1][col] == copy1[-2][col] == copy1[-3][col] and
+                    copy1[-1][col] in ['a', 'b', 'c']):
+                copy1[-1][col] = '_'
+                copy1[-2][col] = '_'
+                copy1[-3][col] = '_'
+    row = copy1[-1]
+    for col in range(len(row) - 2):
+        if row[col] == row[col + 1] == row[col + 2] and row[col] in ['a', 'b', 'c']:
+            row[col] = '_'
+            row[col + 1] = '_'
+            row[col + 2] = '_'
+    return copy1
+def string_update(total, now_el):
+    print(total, now_el)
+    dec = int(input('введите позицию(1-5) на которую хотите поставить элемент'))
+    total[-1][dec - 1] = now_el
+    return total
+import random
+def tetris(x):
+    total = [x]
+    elements = ['a', 'b', 'c']
+    while len(total) > 0 and len(total) < 5:
+        now_el = random.choice(elements)
+
+        if '_' not in total[-1]:
+            lst = ['_', '_', '_', '_', '_']
+            total.append(lst)
+            total = string_three(total)
+        total = string_update(total, now_el)
+        total = string_three(total)
+        i = 0
+        while i < len(total):
+            if 'a' not in total[i] and 'b' not in total[i] and 'c' not in total[i]:
+                total.pop(i)
+            else:
+                i += 1
+        print(total)
+    if len(total) == 0:
+        return 'win'
+    else:
+        return 'lose'
+
+
+game = ['a', 'b', 'c', 'a', 'c']
+print(tetris(game))
+
+
+
+
+
+
+
+
+
+
 
 
 
