@@ -65,3 +65,22 @@ def new_elem(total):#функция для добавления элемента
     total1[-1][dec-1]=new
     return total1
 print(new_elem(total))
+#def three_in_row(total):
+def horisontale(total):
+    if total[0]==total[1] and total[1]==total[2]:
+        total[0:3]='_','_','_'
+    if total[1]==total[2] and total[2]==total[3]:
+        total[1:4]='_','_','_'
+    if total[2]==total[3] and total[3]==total[4]:
+        total[2:5]='_','_','_'
+    return total
+def verticale(total):
+    if len(total)<3:
+        return total
+    else:
+        for index in range(len(total[-1])):  # Итерируем по индексам
+            if (total[-1][index] == total[-2][index] == total[-3][index]):
+                total[-1][index] = '_'
+                total[-2][index] = '_'
+                total[-3][index] = '_'
+        return total
