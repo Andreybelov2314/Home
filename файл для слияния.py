@@ -46,4 +46,13 @@ def arif(x):
     return result
 alg=input("введите пример")
 print(arif(alg))
+print('-=====-')
+import random#создаем начало игры. Рандомная строка+пустая строка
+update=[]
+total=[]
+elements=['a','b','c']
+while len(update)!=5:
+    update.append(random.choice(elements))
+total.append(update)
+total.append(['_','_','_','_', '_'])
 
