@@ -44,8 +44,8 @@ def arif(x):
         elif l[0]=='/':
             result=result/int(l[1:])
     return result
-alg=input("введите пример")
-print(arif(alg))
+#alg=input("введите пример")
+#print(arif(alg))
 print('-=====-')
 import random#создаем начало игры. Рандомная строка+пустая строка
 update=[]
@@ -55,4 +55,13 @@ while len(update)!=5:
     update.append(random.choice(elements))
 total.append(update)
 total.append(['_','_','_','_', '_'])
-
+def new_elem(total):#функция для добавления элемента
+    new=random.choice(elements)
+    for i in total:
+        print(i)
+    print(new)
+    dec=int(input('введите номер клетки(1-5), на которую хотите поставить элемент'))
+    total1=total.copy()
+    total1[-1][dec-1]=new
+    return total1
+print(new_elem(total))
