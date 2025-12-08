@@ -84,3 +84,12 @@ def verticale(total):
                 total[-2][index] = '_'
                 total[-3][index] = '_'
         return total
+def five_or_zero(total):
+    total1=total.copy()
+    if '_' not in total1[-1]:
+        new=['_','_','_','_','_']
+        total1.append(new)
+    if total1[-1]==['_','_','_','_','_']:
+        if '_' in total1[-2]:
+            total1.pop()
+    return total1
