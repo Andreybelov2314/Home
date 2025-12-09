@@ -26,9 +26,6 @@ def horisontale(total):
         total_last[2:5]='_','_','_'
     total[-1]=total_last
     return total
-game1=[['a','a','c','c','b'],['a','a','b','c','b'],['a','a','c','c','c']]
-horis=horisontale(game1)
-print(horis)
 def verticale(total):
     if len(total)<3:
         return total
@@ -39,9 +36,6 @@ def verticale(total):
                 total[-2][index] = '_'
                 total[-3][index] = '_'
         return total
-game2=[['a','a','c','c','b'],['a','a','b','c','b'],['a','a','c','c','c']]
-vert=verticale(game2)
-print(vert)
 def five_or_zero(total):
     total1=total.copy()
     if '_' not in total1[-1]:
@@ -66,4 +60,24 @@ def three_in_row(verticale, horisontale):
         index+=0
         update=[]
     return total1
+def tetris():
+    import random  # создаем начало игры. Рандомная строка+пустая строка
+    update = []
+    total = []
+    elements = ['a', 'b', 'c']
+    while len(update) != 5:
+        update.append(random.choice(elements))
+    total.append(update)
+    total.append(['_', '_', '_', '_', '_'])
+    while len(total) != 5 or len(total) != 0:
+        total = new_elem(total)
+        horis = horisontale(total.copy())
+        vert = verticale(total.copy())
+        total = three_in_row(vert, horis)
+        total = five_or_zero(total)
+    if len(total) == 0:
+        return 'win'
+    elif len(total) !=0:
+        return 'lose'
+print(tetris())
 
