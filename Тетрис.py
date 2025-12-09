@@ -13,9 +13,8 @@ def new_elem(total):#функция для добавления элемента
         print(i)
     print(new)
     dec=int(input('введите номер клетки(1-5), на которую хотите поставить элемент'))
-    total1=total.copy()
-    total1[-1][dec-1]=new
-    return total1
+    total[-1][dec-1]=new
+    return total
 def horisontale(total):
     total_last=total[-1]
     if total_last[0]==total_last[1] and total_last[1]==total_last[2]:
@@ -57,7 +56,7 @@ def three_in_row(verticale, horisontale):
         update.append(i[3]) if i[3]==now_str[3] else update.append('_')
         update.append(i[4]) if i[4]==now_str[4] else update.append('_')
         total1.append(update)
-        index+=0
+        index+=1
         update=[]
     return total1
 def tetris():
@@ -69,12 +68,16 @@ def tetris():
         update.append(random.choice(elements))
     total.append(update)
     total.append(['_', '_', '_', '_', '_'])
-    while len(total) != 5 or len(total) != 0:
+    while True:
         total = new_elem(total)
-        horis = horisontale(total.copy())
-        vert = verticale(total.copy())
-        total = three_in_row(vert, horis)
+        total1=total
+        total2=total
+        vert=verticale(total1)
+        hor=horisontale(total2)
+        total=three_in_row(vert, hor)
         total = five_or_zero(total)
+        if len(total)==0 or len(total) == 6:
+            break
     if len(total) == 0:
         return 'win'
     elif len(total) !=0:
