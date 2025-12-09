@@ -26,6 +26,9 @@ def horisontale(total):
         total_last[2:5]='_','_','_'
     total[-1]=total_last
     return total
+game1=[['a','a','c','c','b'],['a','a','b','c','b'],['a','a','c','c','c']]
+horis=horisontale(game1)
+print(horis)
 def verticale(total):
     if len(total)<3:
         return total
@@ -36,6 +39,9 @@ def verticale(total):
                 total[-2][index] = '_'
                 total[-3][index] = '_'
         return total
+game2=[['a','a','c','c','b'],['a','a','b','c','b'],['a','a','c','c','c']]
+vert=verticale(game2)
+print(vert)
 def five_or_zero(total):
     total1=total.copy()
     if '_' not in total1[-1]:
@@ -45,19 +51,19 @@ def five_or_zero(total):
         if '_' in total1[-2]:
             total1.pop()
     return total1
-def three_in_row(total):
-    copy1=total.copy()
-    copy2=total.copy()
-    total1=verticale(copy1)
-    total2=horisontale(copy2)
-    total3=[]
+def three_in_row(verticale, horisontale):
+    total1=[]
+    update=[]
     index=0
-    for i in total1:
-        if total1.count('_')==total2[index].count('_') or total1.count('_')>total2[index].count('_'):
-            total3.append(i)
-        elif total1.count('_')<total2[index].count('_'):
-            total3.append(total2[index])
-        index+=1
-    return total3
-game=[['a','a','b','c','c'], ['a','a','b','c','c'],['a','b','c','c','c']]
-print(three_in_row(game))
+    for i in verticale:
+        now_str=horisontale[index]
+        update.append(i[0]) if i[0]==now_str[0] else update.append('_')
+        update.append(i[1]) if i[1]==now_str[1] else update.append('_')
+        update.append(i[2]) if i[2]==now_str[2] else update.append('_')
+        update.append(i[3]) if i[3]==now_str[3] else update.append('_')
+        update.append(i[4]) if i[4]==now_str[4] else update.append('_')
+        total1.append(update)
+        index+=0
+        update=[]
+    return total1
+
