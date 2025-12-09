@@ -20,6 +20,30 @@ students = [
 ]
 middle=list(filter(lambda student: True if sum(student['grades'])/len(student['grades']) > 75 else False, students))
 print(middle)
+
+print('-=======-')
+def str_info(str):
+    result= {}
+    count1=0
+    for i in str:
+        if i=='.' or i=='!' or i=='?':
+            count1=count1+1
+    a1={'количество предложений':count1}
+    result.update(a1)
+    count2=len(str.split())
+    a2={'количество слов':count2}
+    result.update(a2)
+    count3=0
+    for i in str.split():
+        if i.isalpha():
+            count3+=int(len(i))
+    count4=count3/count2
+    a3={'средняя длина слова':count4}
+    result.update(a3)
+    return result
+str="В 2023 году было продано 1500 iPhone 14 Pro и 2000 Samsung Galaxy S23. Цены варьировались от 79990 до 129990 рублей. Клиенты оставили 4.5 звезд из 5!"
+print(str_info(str))
+
 print("-============-")
 def arif(x):
     lst=[]
@@ -44,6 +68,57 @@ def arif(x):
         elif l[0]=='/':
             result=result/int(l[1:])
     return result
-#alg=input("введите пример")
-#print(arif(alg))
+alg=input("введите пример")
+print(arif(alg))
+
 print('-=====-')
+
+print('-=============-')
+def code(x, str):
+    lst1=[]
+    update=''
+    result=''
+    for i in str:
+        if len(update)<len(x):
+            if i.isalpha():
+                update+=i
+            else:
+                pass
+        elif len(update)==len(x):
+            lst1.append(update)
+            update=i
+    if update not in lst1:
+        if len(update)==len(x):
+            lst1.append(update)
+        else:
+            while len(update)!=len(x):
+                update+='_'
+            lst1.append(update)
+    quanity=0
+    for i in lst1:
+        quanity+=1
+        if quanity%len(x)==0:
+            result+=' '
+        result+=''.join(sorted(i))
+    return result
+
+text='Andrey'
+keyword='lam'
+print(code(keyword,text))
+print('-============')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

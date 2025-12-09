@@ -1,3 +1,4 @@
+import copy
 import random#создаем начало игры. Рандомная строка+пустая строка
 update=[]
 total=[]
@@ -45,8 +46,10 @@ def five_or_zero(total):
             total1.pop()
     return total1
 def three_in_row(total):
-    total1=horisontale(total.copy())
-    total2=verticale(total.copy())
+    copy1=total.copy()
+    copy2=total.copy()
+    total1=verticale(copy1)
+    total2=horisontale(copy2)
     total3=[]
     index=0
     for i in total1:
