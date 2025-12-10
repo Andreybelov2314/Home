@@ -76,7 +76,7 @@ def tetris():
         hor=horisontale(total2)
         total=three_in_row(vert, hor)
         total = five_or_zero(total)
-        if len(total)==0 or len(total) == 6:
+        if len(total)==0 or len(total) == 7:
             break
     if len(total) == 0:
         return 'win'
