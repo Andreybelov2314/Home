@@ -23,14 +23,16 @@ class task_manager():
         print('список задач успешно загружен')
     def command(self):
         while True:
-            command=input('введите команду:add, done, show, exit')
-            if command=='add':
+            command=input('введите команду:1-add, 2-done, 3-show, 4-load, 5-exit  ')
+            if command=='1':
                 self.add_task()
-            elif command=='done':
+            elif command=='2':
                 self.mark_task_done()
-            elif command=='show':
+            elif command=='3':
                 self.show_tasks()
-            elif command=='exit':
+            elif command=='4':
+                self.load_from_file()
+            elif command=='5':
                 self.save_to_file()
                 break
 
@@ -38,8 +40,7 @@ class task_manager():
 
 
 obj1=task_manager()
-obj1.load_from_file()
-print(obj1.tasks)
+obj1.tasks=[]
 obj1.command()
 
 
