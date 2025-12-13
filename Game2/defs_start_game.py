@@ -2,7 +2,7 @@ from classes import Units
 def start_ptc():
     game_pitch=[]
     while len(game_pitch)!=10:
-        game_pitch.append([' ',' ',' ',' ',' ',' ',' ', ' ', ' ', ' '])
+        game_pitch.append(['  ','  ','  ','  ','  ','  ','  ', '  ', '  ', '  '])
 #создание игрового поля
     return game_pitch
 unit_destroyer=Units('D',5,4,2,3)
@@ -18,17 +18,17 @@ def Team_emp(unit_destroyer,unit_corvette,unit_frigate):#функция для �
         type=input('выберите тип: 1-destroyer, 2-corvette, 3-frigate')
         if type=='1':
             upd={'att':unit_destroyer.attack,'defend':unit_destroyer.defend, 'vision':unit_destroyer.vision,'speed':unit_destroyer.speed}
-            team_emp[f'ED-{destroyer_quanity}']=[upd]
+            team_emp[f'ED-{destroyer_quanity}']=upd
             destroyer_quanity+=1
             money-=2.5
         elif type=='2':
             upd={'att':unit_corvette.attack, 'defend':unit_corvette.defend, 'vivison':unit_corvette.vision,'speed':unit_corvette.speed }
-            team_emp[f'EC-{corvette_quanity}'] = [upd]
+            team_emp[f'EC-{corvette_quanity}'] = upd
             corvette_quanity+=1
             money-=2
         elif type=='3':
             upd={'att':unit_frigate.attack, 'defend':unit_frigate.defend,'vision':unit_frigate.vision,  'speed':unit_frigate.speed}
-            team_emp[f'EF-{frigate_quanity}'] = [upd]
+            team_emp[f'EF-{frigate_quanity}'] = upd
             frigate_quanity+=1
             money-=1.5
         else:
@@ -91,7 +91,7 @@ def start(unit_destroyer,unit_corvette,unit_frigate):#начало игры.
     team1=Team_emp(unit_destroyer,unit_corvette,unit_frigate)
     team2=team_rebel(unit_destroyer,unit_corvette,unit_frigate)
     starting_pitch=start_place(team1,team2,pitch)
-    print(show_field(starting_pitch))
+    show_field(starting_pitch)
     return starting_pitch, team1, team2
 
 
