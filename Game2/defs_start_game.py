@@ -22,7 +22,7 @@ def Team_emp(unit_destroyer,unit_corvette,unit_frigate):#функция для �
             destroyer_quanity+=1
             money-=2.5
         elif type=='2':
-            upd={'att':unit_corvette.attack, 'defend':unit_corvette.defend, 'vivison':unit_corvette.vision,'speed':unit_corvette.speed }
+            upd={'att':unit_corvette.attack, 'defend':unit_corvette.defend, 'vision':unit_corvette.vision,'speed':unit_corvette.speed }
             team_emp[f'EC-{corvette_quanity}'] = upd
             corvette_quanity+=1
             money-=2
@@ -49,7 +49,7 @@ def team_rebel(unit_destroyer,unit_corvette,unit_frigate):#функция для
             destroyer_quanity+=1
             money-=2.5
         elif type=='2':
-            upd={'att':unit_corvette.attack, 'defend':unit_corvette.defend, 'vivison':unit_corvette.vision,'speed':unit_corvette.speed }
+            upd={'att':unit_corvette.attack, 'defend':unit_corvette.defend, 'vision':unit_corvette.vision,'speed':unit_corvette.speed }
             team_rebel[f'RC-{corvette_quanity}'] = upd
             corvette_quanity+=1
             money-=2

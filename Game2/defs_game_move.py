@@ -26,8 +26,8 @@ def move(team, game_pitch):#функция для перемещения
 
 
 
-def get_info(unit_name, team_name, info):#функция для получения конкретного значения конкретного юнита
-    data_unit=team_name.get(unit_name)
+def get_info(unit_name, team_dict, info):#функция для получения конкретного значения конкретного юнита
+    data_unit=team_dict.get(unit_name)
     information=data_unit.get(info)
     return information
 
@@ -47,10 +47,10 @@ def player_view(pitch, unit_name, unit_vision):#функция, выводяща
         view.append(i[start_y:end_y + 1])
     return view
 def unit_moving(team, unit, unit_field, unit_index):
-    new_index=unit_index
-    unit_speed=get_info(team,unit,'speed')
+    new_index = [unit_index[0], unit_index[1]]
+    unit_speed=get_info(unit,team,'speed')
     print(show_field(unit_field))
-    dec=input('введите направление перемещения:a-влево, d-вправо, w-вперед s-назад: ')
+    dec=input('введите направление перемещения:a-влево, d-вправо, w-вверх s-вниз: ')
     if dec=='a':
         if int(unit_index[1])-int(unit_speed)>=0:
             new_index[1]=int(unit_index[1])-int(unit_speed)
@@ -72,9 +72,5 @@ def unit_moving(team, unit, unit_field, unit_index):
         else:
             new_index[0]=9
     return new_index
-
-
-
-
 
 
