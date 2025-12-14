@@ -10,4 +10,3 @@ class Units:
         self.defend=defend
         self.vision=vision
         self.speed=speed
-

@@ -18,9 +18,10 @@ def move(team, game_pitch):#функция для перемещения
     index=get_index(game_pitch, moving_unit)
     unit_field=player_view(game_pitch, moving_unit,vis)
     new_index=unit_moving(team,moving_unit, unit_field,index)
-    game_pitch[int(index[0])][int(index[1])] = ' '
+    game_pitch[int(index[0])][int(index[1])] = '  '
     game_pitch[int(new_index[0])][int(new_index[1])] = moving_unit
-    return game_pitch
+    new_view=player_view(game_pitch, moving_unit,vis)
+    return game_pitch, moving_unit, new_view
 
 
 

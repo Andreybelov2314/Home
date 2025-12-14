@@ -1,3 +1,4 @@
+
 from classes import Units
 def start_ptc():
     game_pitch=[]
@@ -5,9 +6,9 @@ def start_ptc():
         game_pitch.append(['  ','  ','  ','  ','  ','  ','  ', '  ', '  ', '  '])
 #создание игрового поля
     return game_pitch
-unit_destroyer=Units('D',5,4,2,3)
+unit_destroyer=Units('D',5,4,3,3)
 unit_corvette=Units('C',2,3,5,4)
-unit_frigate=Units('F',3,5,1,3)
+unit_frigate=Units('F',5,2,2,2)
 def Team_emp(unit_destroyer,unit_corvette,unit_frigate):#функция для добавления кораблей в команду имп.
     team_emp={}
     destroyer_quanity=1
@@ -25,15 +26,16 @@ def Team_emp(unit_destroyer,unit_corvette,unit_frigate):#функция для �
             upd={'att':unit_corvette.attack, 'defend':unit_corvette.defend, 'vision':unit_corvette.vision,'speed':unit_corvette.speed }
             team_emp[f'EC-{corvette_quanity}'] = upd
             corvette_quanity+=1
-            money-=2
+            money-=1.5
         elif type=='3':
             upd={'att':unit_frigate.attack, 'defend':unit_frigate.defend,'vision':unit_frigate.vision,  'speed':unit_frigate.speed}
             team_emp[f'EF-{frigate_quanity}'] = upd
             frigate_quanity+=1
-            money-=1.5
+            money-=1
         else:
             break
         print(money)
+        print(to_units(team_emp))
     return team_emp
 def team_rebel(unit_destroyer,unit_corvette,unit_frigate):#функция для добавления в команду повст.
     team_rebel={}
@@ -61,6 +63,7 @@ def team_rebel(unit_destroyer,unit_corvette,unit_frigate):#функция для
         else:
             break
         print(money)
+        print(to_units(team_rebel))
     return team_rebel
 def to_units(team):#создает список с названиями юнитов команды
     team_units=list(team.keys())
