@@ -11,14 +11,14 @@ def get_index(pitch, object):#функция для получения инде�
     index=[x,y]
     return index
 def move(team, game_pitch):#функция для перемещения
-    print(to_units(team))
+    print(list(team.keys()))
     num=int(input('введите номер юнита, который хотите переместить'))
-    moving_unit=to_units(team)[num-1]
+    moving_unit=list(team.keys())[num-1]
     vis=get_info(moving_unit,team,'vision')
     index=get_index(game_pitch, moving_unit)
     unit_field=player_view(game_pitch, moving_unit,vis)
     new_index=unit_moving(team,moving_unit, unit_field,index)
-    game_pitch[int(index[0])][int(index[1])] = '  '
+    game_pitch[int(index[0])][int(index[1])] = '   '
     game_pitch[int(new_index[0])][int(new_index[1])] = moving_unit
     new_view=player_view(game_pitch, moving_unit,vis)
     return game_pitch, moving_unit, new_view
@@ -58,7 +58,7 @@ def unit_moving(team, unit, unit_field, unit_index):
         else:
             new_index[1]=0
     elif dec=='d':
-        if int(unit_index[1])-int(unit_speed)<=9:
+        if int(unit_index[1])-int(unit_speed)<=14:
             new_index[1]=int(unit_index[1])+int(unit_speed)
         else:
             new_index[1]=9
@@ -68,7 +68,7 @@ def unit_moving(team, unit, unit_field, unit_index):
         else:
             new_index[0]=0
     elif dec=='s':
-        if int(unit_index[0])+int(unit_speed)<=9:
+        if int(unit_index[0])+int(unit_speed)<=14:
             new_index[0]=int(unit_index[0])+int(unit_speed)
         else:
             new_index[0]=9

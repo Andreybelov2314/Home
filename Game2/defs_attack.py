@@ -8,7 +8,7 @@ def attack_goals(pitch, unit, team):#функция выбора цели
     print(show_field(new_pitch))
     for i in new_pitch:
         for j in i:
-            if j!='  ':
+            if j!='   ':
                 goals.append(j)
     print(goals)
     index=int(input('ведите номер корабля, который хотите атаковать'))
@@ -26,8 +26,8 @@ def attack_effects(unit, team, goal, team2, field):#возвращает исп�
         dam_res=random.choice(dam_LT)
     elif int(att)==int(defend):
         dam_res=random.choice(dam_EQ)
-    damage(dam_res,goal,team2, field)
-    return team2
+    team2, field=damage(dam_res,goal,team2, field)
+    return team2, field
 
 
 

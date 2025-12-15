@@ -2,13 +2,13 @@
 from classes import Units
 def start_ptc():
     game_pitch=[]
-    while len(game_pitch)!=10:
-        game_pitch.append(['  ','  ','  ','  ','  ','  ','  ', '  ', '  ', '  '])
+    while len(game_pitch)!=15:
+        game_pitch.append(['   ','   ','   ','   ','   ','   ', '   ', '   ', '   ','   ', '   ', '   ', '   ', '   ','   '])
 #создание игрового поля
     return game_pitch
-unit_destroyer=Units('D',5,4,3,3)
-unit_corvette=Units('C',2,3,5,4)
-unit_frigate=Units('F',5,2,2,2)
+unit_destroyer=Units('D',12,10,7,3)
+unit_corvette=Units('C',5,7,12,4)
+unit_frigate=Units('F',15,5,5,2)
 def Team_emp(unit_destroyer,unit_corvette,unit_frigate):#функция для добавления кораблей в команду имп.
     team_emp={}
     destroyer_quanity=1
@@ -35,7 +35,7 @@ def Team_emp(unit_destroyer,unit_corvette,unit_frigate):#функция для �
         else:
             break
         print(money)
-        print(to_units(team_emp))
+        print(list(team_emp.keys()))
     return team_emp
 def team_rebel(unit_destroyer,unit_corvette,unit_frigate):#функция для добавления в команду повст.
     team_rebel={}
@@ -63,14 +63,12 @@ def team_rebel(unit_destroyer,unit_corvette,unit_frigate):#функция для
         else:
             break
         print(money)
-        print(to_units(team_rebel))
+        print(list(team_rebel.keys()))
     return team_rebel
-def to_units(team):#создает список с названиями юнитов команды
-    team_units=list(team.keys())
-    return team_units
+
 def start_place(team_1, team_2, starting_pitch):#создание стартового поля
-    team_1_units=to_units(team_1)
-    team_2_units=to_units(team_2)
+    team_1_units=list(team_1.keys())
+    team_2_units=list(team_2.keys())
     new_str = starting_pitch[0]
     new_str2 = starting_pitch[-1]
     for i in range(len(team_1_units)):
