@@ -61,6 +61,19 @@ class Vector2D():
         return f'(Vector({self.x},{self.y}))'
     def  length(self):
         return (self.x**2 + self.y**2)**0.5
+class Triangle():
+    def __init__(self,a,b,c):
+        self.a=a
+        self.b=b
+        self.c=c
+    def is_triangle(self):
+        if self.a<0 or self.b<0 or self.c<0:
+            return f'с отрицательными числами ничего не получится'
+        elif self.a>self.b+self.c or self.b>self.c+self.a or self.c>self.b+self.a:
+            return f'такой треугольник построить нельзя'
+        else:
+            return 'такой треугольник построить можно'
+
 
 
 
