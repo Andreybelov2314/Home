@@ -30,23 +30,32 @@ def attack_effects(unit, team, goal, team2, field):#возвращает исп�
     return team2, field
 
 
-
-def damage(damage_amount, target_unit_name, team_dict, field):#анесение урона
+def damage(damage_amount, target_unit_name, team_dict, field):
     if target_unit_name not in team_dict:
         print(f"Ошибка: Юнит '{target_unit_name}' не найден в команде!")
-        return team_dict
+        return team_dict, field
     unit_data = team_dict[target_unit_name]
     current_defense = unit_data.get('defend', 0)
     new_defense = current_defense - damage_amount
     if new_defense <= 0:
         del team_dict[target_unit_name]
         print(f"Юнит '{target_unit_name}' уничтожен! (Урон: {damage_amount})")
-        x=get_index(field, target_unit_name)[0]
-        y=get_index(field, target_unit_name)[1]
-        field[int(x)][int(y)]='   '
+        x, y = get_index(field, target_unit_name)
+        x, y = int(x), int(y)
+        if isinstance(field, list) and len(field) > 0:
+            field = field.copy()
+            if x < len(field) and y < len(field[x]):
+                row = list(field[x])
+                cell_length = 3
+                start_pos = y * cell_length
+                if start_pos + cell_length <= len(row):
+                    for i in range(cell_length):
+                        if start_pos + i < len(row):
+                            row[start_pos + i] = ' '
+                    field[x] = ''.join(row)
 
     else:
         unit_data['defend'] = new_defense
         print(f"Юнит '{target_unit_name}' получил урон {damage_amount}. Защита: {current_defense} → {new_defense}")
-    return team_dict, field
 
+    return team_dict, field

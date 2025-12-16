@@ -10,7 +10,7 @@ while True:
         decision=input('хотите ли вы атаковать юниты соперника(y/n)?')
         if decision=='y':
             goal=attack_goals(field,moving_unit,team_e)
-            team_r=attack_effects(moving_unit, team_e, goal, team_r, field)
+            team_r, field=attack_effects(moving_unit, team_e, goal, team_r, field)
         flag=False
     elif flag==False:
         field,moving_unit, new_view=move(team_r,field)
