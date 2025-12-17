@@ -9,7 +9,6 @@ class cats(zoo):
         return 'Roar'
     def eating(self):
         return 'all other animals'
-
 obj1=cats('tiger', 'Leo')
 print(obj1.passport())
 print(obj1.eating())

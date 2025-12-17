@@ -6,8 +6,8 @@ def start_ptc():
         game_pitch.append(['   ','   ','   ','   ','   ','   ', '   ', '   ', '   ','   ', '   ', '   ', '   ', '   ','   '])
 #создание игрового поля
     return game_pitch
-unit_destroyer=Units('D',12,10,7,3)
-unit_corvette=Units('C',5,7,12,4)
+unit_destroyer=Units('D',12,10,3,3)
+unit_corvette=Units('C',5,7,4,4)
 unit_frigate=Units('F',15,5,5,2)
 def Team_emp(unit_destroyer,unit_corvette,unit_frigate):#функция для добавления кораблей в команду имп.
     team_emp={}
