@@ -3,15 +3,23 @@ class Manager(Employee):
 
     def __init__(self,name,age, position):
         super().__init__(name,age, position)
-        self.team=[]
+        self.team=''
 
     def add_team(self, new_emp):
-        self.team.append(new_emp)
+        self.team+=new_emp
     def get_info(self):
         return f'name:{self.name}, {self.age} years old., position: {self.position}, team: {self.team}'
-    def get_name(self):
+    @property
+    def name_m(self):
         return self.name
-    def get_age(self):
-        return self.age
-    def get_position(self):
-        return self.position
+
+    @name_m.setter
+    def name_m(self, value):
+        pass
+    @property
+    def team_m(self):
+        return self.team
+
+    @team_m.setter
+    def team_m(self, value):
+        pass

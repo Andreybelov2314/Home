@@ -10,23 +10,23 @@ while True:
         age=input('enter age: ')
         position=input('enter position: ')
         obj=Employee(name,age,position)
-        employees.append(obj.get_info())
+        employees.append(obj)
     elif dec=='2':
         name=input('enter name: ')
         age=input('enter age: ')
         position=input('enter position: ')
         obj=Manager(name,age,position)
-        managers.append(obj.get_info())
+        managers.append(obj)
     elif dec=='3':
         em_name=input('enter employees name: ')
         m_name=input('enter managers name: ')
-        for i in managers:
-            if i.name==m_name:
-                i.team.append(em_name)
-                break
+        for man in managers:
+            if man.name==m_name:
+                man.team+=em_name
+
         print(f'работник {em_name} добавлен в команду к менеджеру {m_name}')
     elif dec=='4':
         print(employees)
     else:
         break
-
+print(managers)
