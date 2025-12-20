@@ -1,102 +1,112 @@
+from Game2.Units_classes.corvette import*
+from Game2.Units_classes.destroyer import*
+from Game2.Units_classes.frigate import*
 
-from classes import Units
+
 def start_ptc():
     game_pitch=[]
     while len(game_pitch)!=15:
         game_pitch.append(['   ','   ','   ','   ','   ','   ', '   ', '   ', '   ','   ', '   ', '   ', '   ', '   ','   '])
 #создание игрового поля
     return game_pitch
-unit_destroyer=Units('D',12,10,3,3)
-unit_corvette=Units('C',5,7,4,4)
-unit_frigate=Units('F',15,5,5,2)
-def Team_emp(unit_destroyer,unit_corvette,unit_frigate):#функция для добавления кораблей в команду имп.
-    team_emp={}
-    destroyer_quanity=1
-    corvette_quanity=1
-    frigate_quanity=1
-    money=10
-    while money>0:
-        type=input('выберите тип: 1-destroyer, 2-corvette, 3-frigate')
-        if type=='1':
-            upd={'att':unit_destroyer.attack,'defend':unit_destroyer.defend, 'vision':unit_destroyer.vision,'speed':unit_destroyer.speed}
-            team_emp[f'ED-{destroyer_quanity}']=upd
-            destroyer_quanity+=1
-            money-=2.5
-        elif type=='2':
-            upd={'att':unit_corvette.attack, 'defend':unit_corvette.defend, 'vision':unit_corvette.vision,'speed':unit_corvette.speed }
-            team_emp[f'EC-{corvette_quanity}'] = upd
-            corvette_quanity+=1
-            money-=1.5
-        elif type=='3':
-            upd={'att':unit_frigate.attack, 'defend':unit_frigate.defend,'vision':unit_frigate.vision,  'speed':unit_frigate.speed}
-            team_emp[f'EF-{frigate_quanity}'] = upd
-            frigate_quanity+=1
-            money-=1
-        else:
-            break
-        print(money)
-        print(list(team_emp.keys()))
-    return team_emp
-def team_rebel(unit_destroyer,unit_corvette,unit_frigate):#функция для добавления в команду повст.
-    team_rebel={}
-    destroyer_quanity=1
-    corvette_quanity=1
-    frigate_quanity=1
-    money=10
-    while money>0:
-        type=input('выберите тип: 1-destroyer, 2-corvette, 3-frigate')
-        if type=='1':
-            upd={'att':unit_destroyer.attack,'defend':unit_destroyer.defend, 'vision':unit_destroyer.vision,'speed':unit_destroyer.speed}
-            team_rebel[f'RD-{destroyer_quanity}']=upd
-            destroyer_quanity+=1
-            money-=2.5
-        elif type=='2':
-            upd={'att':unit_corvette.attack, 'defend':unit_corvette.defend, 'vision':unit_corvette.vision,'speed':unit_corvette.speed }
-            team_rebel[f'RC-{corvette_quanity}'] = upd
-            corvette_quanity+=1
-            money-=2
-        elif type=='3':
-            update={'att':unit_frigate.attack, 'defend':unit_frigate.defend,'vision':unit_frigate.vision,  'speed':unit_frigate.speed}
-            team_rebel[f'RF-{frigate_quanity}'] = update
-            frigate_quanity+=1
-            money-=1.5
-        else:
-            break
-        print(money)
-        print(list(team_rebel.keys()))
-    return team_rebel
 
-def start_place(team_1, team_2, starting_pitch):#создание стартового поля
-    team_1_units=list(team_1.keys())
-    team_2_units=list(team_2.keys())
-    new_str = starting_pitch[0]
-    new_str2 = starting_pitch[-1]
-    for i in range(len(team_1_units)):
-        print(new_str)
-        dec=int(input('введите номер поля(1-20), на которое хотите поставить юнит'))
-        new_str[dec-1]=team_1_units[i]
-    for i in range(len(team_2_units)):
-        print(new_str2)
-        dec=int(input('введите номер поля(1-20), на которое хотите поставить юнит'))
-        new_str2[dec-1]=team_2_units[i]
-    starting_pitch[0]=new_str
-    starting_pitch[-1]=new_str2
-    return starting_pitch
-def show_field(starting_pitch):#выводит поле
-    for i in starting_pitch:
-        print(i)
+
+def create_team_empire():
+    team_e = []  # команда империи
+    money = 10
+    destroyer_q = 1
+    frigate_q = 1
+    corvette_q = 1
+
+    while money > 0:
+        dec = input('выберите тип корабля:1-destroyer,2-frigate, 3-corvette')
+        if dec == '1':
+            nam = f'ED-{destroyer_q}'
+            obj = destroyer(nam)
+            team_e.append(obj)
+            money = money - 3
+            destroyer_q += 1
+        elif dec == '2':
+            nam = f'EF-{frigate_q}'
+            obj = frigate(nam)
+            team_e.append(obj)
+            money = money - 2.5
+            frigate_q += 1
+        elif dec == '3':
+            nam = f'EC-{corvette_q}'
+            obj = corvette(nam)
+            team_e.append(obj)
+            money = money - 1.5
+            corvette_q += 1
+        else:
+            break
+        print(money)
+        for i in team_e:
+            print(i.name, end=', ')
         print()
 
-def start(unit_destroyer,unit_corvette,unit_frigate):#начало игры.
-    pitch=start_ptc()
-    team1=Team_emp(unit_destroyer,unit_corvette,unit_frigate)
-    team2=team_rebel(unit_destroyer,unit_corvette,unit_frigate)
-    starting_pitch=start_place(team1,team2,pitch)
-    show_field(starting_pitch)
-    return starting_pitch, team1, team2
+    return team_e
 
 
+def create_team_rebels():
+    team_r = []  # команда повстанцев
+    money = 10
+    destroyer_q = 1
+    frigate_q = 1
+    corvette_q = 1
 
+    while money > 0:
+        dec = input('выберите тип корабля:1-destroyer,2-frigate, 3-corvette')
+        if dec == '1':
+            nam = f'RD-{destroyer_q}'
+            obj = destroyer(nam)
+            team_r.append(obj)
+            money = money - 3
+            destroyer_q += 1
+        elif dec == '2':
+            nam = f'RF-{frigate_q}'
+            obj = frigate(nam)
+            team_r.append(obj)
+            money = money - 2.5
+            frigate_q += 1
+        elif dec == '3':
+            nam = f'RC-{corvette_q}'
+            obj = corvette(nam)
+            team_r.append(obj)
+            money = money - 1.5
+            corvette_q += 1
+        else:
+            break
+        print(money)
+        for i in team_r:
+            print(i.name, end=', ')
+        print()
+
+    return team_r
+
+def starting_field(team1, team2, field):
+    for i in team1:
+        unit_icon=i.name
+        print(field[0])
+        print(unit_icon)
+        dec=int(input('введите номер поля, но который хотите поставить юнит'))
+        field[0][dec-1]=unit_icon
+        i.field_index=[0, dec]
+    for c in team2:
+        unit_icon = c.name
+        print(field[-1])
+        print(unit_icon)
+        dec = int(input('введите номер поля, но который хотите поставить юнит'))
+        field[-1][dec-1] = unit_icon
+    return field
+
+
+def start_game():
+    field=start_ptc()
+    team1=create_team_empire()
+    team2=create_team_rebels()
+    field=starting_field(team1, team2, field)
+    return field, team1, team2
 
 
 

@@ -1,77 +1,110 @@
 from defs_start_game import *
-from classes import *
-def get_index(pitch, object):#функция для получения индекса обьекта во вложенных списках
-    x=0
-    y=0
-    for i in pitch:
-        for j in i:
-            if j == object:
-                x=pitch.index(i)
-                y=i.index(j)
-    index=[x,y]
-    return index
-def move(team, game_pitch):#функция для перемещения
-    print(list(team.keys()))
-    num=int(input('введите номер юнита, который хотите переместить'))
-    moving_unit=list(team.keys())[num-1]
-    vis=get_info(moving_unit,team,'vision')
-    index=get_index(game_pitch, moving_unit)
-    unit_field=player_view(game_pitch, moving_unit,vis)
-    new_index=unit_moving(team,moving_unit, unit_field,index)
-    game_pitch[int(index[0])][int(index[1])] = '   '
-    game_pitch[int(new_index[0])][int(new_index[1])] = moving_unit
-    new_view=player_view(game_pitch, moving_unit,vis)
-    return game_pitch, moving_unit, new_view
+
+def show_field(field):
+    for i in field:
+        print(i)
+        print()
+
+
+def move(team, game_pitch):
+    # Шаг 1: Определяем новые позиции для всех юнитов
+    moves = []
+    for unit in team:
+        print(f"Определение перемещения для: {unit.name}")
+        view = int(unit.vision)
+        index = unit.field_index
+        uv = player_view(game_pitch, view, index)
+        new_index = unit_moving(unit, uv, index)
+        moves.append((unit, new_index))
+
+    # Шаг 2: Создаем карту занятости новых позиций
+    new_positions_map = {}
+    for unit, new_idx in moves:
+        key = (int(new_idx[0]), int(new_idx[1]))
+        if key not in new_positions_map:
+            new_positions_map[key] = []
+        new_positions_map[key].append(unit)
+
+    # Шаг 3: Очищаем ВСЕ текущие позиции команды
+    for unit in team:
+        x, y = int(unit.field_index[0]), int(unit.field_index[1])
+        if game_pitch[x][y] == unit.name:
+            game_pitch[x][y] = '   '
+
+    # Шаг 4: Применяем перемещения, разрешая конфликты
+    for unit, new_idx in moves:
+        x, y = int(new_idx[0]), int(new_idx[1])
+
+        # Проверяем, не занята ли клетка другим юнитом
+        if game_pitch[x][y] != '   ':
+            # Конфликт! Возвращаем на старое место
+            old_x, old_y = int(unit.field_index[0]), int(unit.field_index[1])
+            game_pitch[old_x][old_y] = unit.name
+            print(f"{unit.name} не может переместиться на ({x},{y}) - клетка занята")
+        else:
+            game_pitch[x][y] = unit.name
+            unit.field_index = new_idx
+
+    return team, game_pitch
 
 
 
 
 
-def get_info(unit_name, team_dict, info):#функция для получения конкретного значения конкретного юнита
-    data_unit=team_dict.get(unit_name)
-    information=data_unit.get(info)
-    return information
 
 
-def player_view(pitch, unit_name, unit_vision):#функция, выводящая часть поля в видимости корабля
-    view = []
-    index = get_index(pitch, unit_name)
-    x = int(index[0])
-    y = int(index[1])
-    max_x = len(pitch) - 1
-    max_y = len(pitch[0]) - 1
-    start_x = max(0, x - int(unit_vision))
-    end_x = min(max_x, x + int(unit_vision))
-    start_y = max(0, y - int(unit_vision))
-    end_y = min(max_y, y + int(unit_vision))
-    for i in pitch[start_x:end_x + 1]:
-        view.append(i[start_y:end_y + 1])
-    return view
-def unit_moving(team, unit, unit_field, unit_index):
-    new_index = [unit_index[0], unit_index[1]]
-    unit_speed=get_info(unit,team,'speed')
+
+
+
+
+def player_view(field, view, index):#функция, выводящая часть поля в видимости корабля
+    x=int(index[0])
+    y=int(index[1])
+    field_height = len(field)
+    field_width = len(field[0]) if field_height > 0 else 0
+    start_x = max(0, x - view)
+    end_x = min(field_height, x + view + 1)
+    start_y = max(0, y - view)
+    end_y = min(field_width, y + view + 1)
+    unit_view = []
+    for i in range(start_x, end_x):
+        row = field[i][start_y:end_y]
+        unit_view.append(row)
+    return unit_view
+
+
+
+
+
+
+
+
+
+
+def unit_moving( unit, unit_field, unit_index):
+    spd=int(unit.speed)
     print(show_field(unit_field))
-    dec=input('введите направление перемещения:a-влево, d-вправо, w-вверх s-вниз: ')
+    dec=input('введите направление перемещения:a-влево, d-вправо, w-вверх s-вниз:')
+    new_index=[]
     if dec=='a':
-        if int(unit_index[1])-int(unit_speed)>=0:
-            new_index[1]=int(unit_index[1])-int(unit_speed)
-        else:
-            new_index[1]=0
+        new_index.append(unit_index[0])
+        upd=int(unit_index[1])-spd if int(unit_index[1])-spd>=0 else 0
+        new_index.append(upd)
     elif dec=='d':
-        if int(unit_index[1])-int(unit_speed)<=14:
-            new_index[1]=int(unit_index[1])+int(unit_speed)
-        else:
-            new_index[1]=9
+        new_index.append(unit_index[0])
+        upd = int(unit_index[1]) + spd if int(unit_index[1]) + spd <= 14 else 14
+        new_index.append(upd)
     elif dec=='w':
-        if int(unit_index[0])-int(unit_speed)>=0:
-            new_index[0]=int(unit_index[0])-int(unit_speed)
-        else:
-            new_index[0]=0
+        upd=int(unit_index[0])-spd if int(unit_index[0])-spd>=0 else 0
+        new_index.append(upd)
+        new_index.append(unit_index[1])
     elif dec=='s':
-        if int(unit_index[0])+int(unit_speed)<=14:
-            new_index[0]=int(unit_index[0])+int(unit_speed)
-        else:
-            new_index[0]=9
+        upd = int(unit_index[0]) + spd if int(unit_index[0]) + spd <= 14 else 14
+        new_index.append(upd)
+        new_index.append(unit_index[1])
+    else:
+        return unit_index
     return new_index
+    
 
 
