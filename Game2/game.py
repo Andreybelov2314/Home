@@ -1,30 +1,44 @@
 from Game2.defs_start_game import*
 from Game2.defs_game_move import*
 from Game2.defs_attack import*
-flag=True
-field,team_e, team_r=start(unit_destroyer,unit_corvette,unit_frigate)
+from Game2.Units_classes.corvette import*
+from Game2.Units_classes.destroyer import*
+from Game2.Units_classes.frigate import*
+
+flag = True
+field, team_e, team_r = start_game()
+
 while True:
-    if flag==True:
-        field,moving_unit, new_view=move(team_e,field)
-        print(show_field(new_view))
-        decision=input('хотите ли вы атаковать юниты соперника(y/n)?')
-        if decision=='y':
-            goal=attack_goals(field,moving_unit,team_e)
-            team_r, field=attack_effects(moving_unit, team_e, goal, team_r, field)
-        flag=False
+    if flag == True:
+        print('Ходит команда 1 (Империя)')
+        field, team_e = move(team_e, field)
+        print('Фаза атаки Империи')
+        for i in team_e:
+            print(i.name)
+            uv=player_view(field, i.vision, i.field_index)
+            print(show_field(uv))
+            g_lst=attack_goals(uv, i)
+            print(g_lst)
+            field, team_r=attack(team_r,i,g_lst,field)
+            flag=False
     elif flag==False:
-        field,moving_unit, new_view=move(team_r,field)
-        print(show_field(new_view))
-        decision=input('хотите ли вы атаковать юниты соперника(y/n)?')
-        if decision=='y':
-            goal=attack_goals(field,moving_unit,team_r)
-            team_r, field=attack_effects(moving_unit, team_r, goal, team_e, field)
-        flag=True
+        print('Ходит команда 2 (Повстанцы)')
+        field, team_r = move(team_r, field)
+        print('Фаза атаки Повстанцев')
+        for i in team_r:
+            print(i.name)
+            uv = player_view(field, i.vision, i.field_index)
+            print(show_field(uv))
+            g_lst = attack_goals(uv, i)
+            print(g_lst)
+            field, team_e = attack(team_e, i, g_lst, field)
+            flag=True
     if len(team_r)==0:
         print('Империя победила')
         break
-    elif len(team_r)==0:
+    elif len(team_e)==0:
         print('Повстанцы победили')
         break
+
 
 

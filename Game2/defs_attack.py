@@ -1,61 +1,87 @@
 from defs_start_game import *
 from defs_game_move import *
+from Game2.Units_classes.corvette import*
+from Game2.Units_classes.destroyer import*
+from Game2.Units_classes.frigate import*
 import random
-def attack_goals(pitch, unit, team):#функция выбора цели
+def attack_goals(pitch, i):#функция выбора цели
     goals=[]
-    vis=get_info(unit,team, 'vision')
-    new_pitch=player_view(pitch,unit, vis)
-    print(show_field(new_pitch))
-    for i in new_pitch:
-        for j in i:
-            if j!='   ':
+    for l in pitch:
+        for j in l:
+            if j!='   ' and j[0]!=i.name[0]:
                 goals.append(j)
-    print(goals)
-    index=int(input('ведите номер корабля, который хотите атаковать'))
-    goal=goals[index-1]
-    return goal
-def attack_effects(unit, team, goal, team2, field):#возвращает исправленный список команды после нанесения урона
+    return goals
+def attack(team2, unit_moving, goals, field):
     dam_LT=[0, 0, 1, 1, 1, 2, 2, 2, 3, 3]
     dam_MT=[3, 3, 4, 4, 4, 4, 5, 5, 5, 6]
     dam_EQ=[1, 2, 2, 2, 3, 3, 3, 4, 4, 5]
-    att=get_info(unit, team, 'att')
-    defend=get_info(goal, team2, 'defend')
-    if int(att)>int(defend):
-        dam_res=random.choice(dam_MT)
-    elif int(att)<int(defend):
-        dam_res=random.choice(dam_LT)
-    elif int(att)==int(defend):
-        dam_res=random.choice(dam_EQ)
-    team2, field=damage(dam_res,goal,team2, field)
-    return team2, field
 
-
-def damage(damage_amount, target_unit_name, team_dict, field):
-    if target_unit_name not in team_dict:
-        print(f"Ошибка: Юнит '{target_unit_name}' не найден в команде!")
-        return team_dict, field
-    unit_data = team_dict[target_unit_name]
-    current_defense = unit_data.get('defend', 0)
-    new_defense = current_defense - damage_amount
-    if new_defense <= 0:
-        del team_dict[target_unit_name]
-        print(f"Юнит '{target_unit_name}' уничтожен! (Урон: {damage_amount})")
-        x, y = get_index(field, target_unit_name)
-        x, y = int(x), int(y)
-        if isinstance(field, list) and len(field) > 0:
-            field = field.copy()
-            if x < len(field) and y < len(field[x]):
-                row = list(field[x])
-                cell_length = 3
-                start_pos = y * cell_length
-                if start_pos + cell_length <= len(row):
-                    for i in range(cell_length):
-                        if start_pos + i < len(row):
-                            row[start_pos + i] = ' '
-                    field[x] = ''.join(row)
-
+    if len(goals)>0:
+        print(goals)
+        index=int(input('ведите номер корабля, который хотите атаковать'))
+        goal=goals[index-1]
+        g_ind=0
+        att=unit_moving.attack
+        defend=0
+        for l in team2:
+            if l.name==goal:
+                g_ind=team2.index(l)
+                new_defend=l.defend
+        if int(att)>int(defend):
+            damage=random.choice(dam_MT)
+            new_defend-=damage
+            if new_defend<=0:
+                print(f'юнит {team2[g_ind].name} уничтожен')
+                ind=team2[g_ind].field_index
+                field[ind[0]][ind[1]]='    '
+                team2.pop(g_ind)
+            else:
+                print(f'юниту {team2[g_ind].name} нанесено {damage} урона')
+                team2[g_ind].defend=new_defend
+        elif int(att)<int(defend):
+            damage = random.choice(dam_LT)
+            new_defend -= damage
+            if new_defend <= 0:
+                print(f'юнит {team2[g_ind].name} уничтожен')
+                ind = team2[g_ind].field_index
+                field[ind[0]][ind[1]] = '    '
+                team2.pop(g_ind)
+            else:
+                print(f'юниту {team2[g_ind].name} нанесено {damage} урона')
+                team2[g_ind].defend = new_defend
+        elif int(att)==int(defend):
+            damage = random.choice(dam_EQ)
+            new_defend -= damage
+            if new_defend <= 0:
+                print(f'юнит {team2[g_ind].name} уничтожен')
+                ind = team2[g_ind].field_index
+                field[ind[0]][ind[1]] = '    '
+                team2.pop(g_ind)
+            else:
+                print(f'юниту {team2[g_ind].name} нанесено {damage} урона')
+                team2[g_ind].defend = new_defend
+        return field, team2
     else:
-        unit_data['defend'] = new_defense
-        print(f"Юнит '{target_unit_name}' получил урон {damage_amount}. Защита: {current_defense} → {new_defense}")
+        print(' целей для атаки нет')
+        return field, team2
 
-    return team_dict, field
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

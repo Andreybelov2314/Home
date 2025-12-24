@@ -91,13 +91,14 @@ def starting_field(team1, team2, field):
         print(unit_icon)
         dec=int(input('введите номер поля, но который хотите поставить юнит'))
         field[0][dec-1]=unit_icon
-        i.field_index=[0, dec]
+        i.field_index=[0, dec-1]
     for c in team2:
         unit_icon = c.name
         print(field[-1])
         print(unit_icon)
         dec = int(input('введите номер поля, но который хотите поставить юнит'))
         field[-1][dec-1] = unit_icon
+        c.field_index=[14, dec-1]
     return field
 
 
