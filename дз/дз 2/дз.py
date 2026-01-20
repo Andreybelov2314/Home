@@ -42,7 +42,7 @@ def shop_info():
 
             ]
                }
-        with open('data.json','a', encoding='utf-8') as f:
+        with open('data.json', 'a', encoding='utf-8') as f:
             f.write(json.dumps(data2,ensure_ascii=False))
 
 shop_info()
