@@ -1,0 +1,35 @@
+create table authors
+(
+	Authorid uuid not null default gen_random_uuid(),
+	first_name text,
+	second_name text,
+	primary key (Authorid)
+);
+insert into authors (first_name, second_name)
+values
+('Иван', 'Петров'),
+('Александр','Пушкин'),
+('Анджей','Сапковский');
+
+
+create table books
+(
+	Bookid uuid not null default gen_random_uuid(),
+	Title text,
+	AuthorID UUID REFERENCES Authors(AuthorID),
+	primary key(Bookid)
+);
+
+insert into books (Title, authorid)
+values
+('Ведьмак', '54a9696b-725c-44b8-b1d2-29f68e8b6513'),
+('Евгений Онегин', '089aec9c-35d6-40c9-9d81-2c23b5652c09'),
+('Капитанская дочка', '089aec9c-35d6-40c9-9d81-2c23b5652c09');
+
+select * from authors;
+select * from books;
+alter table books
+	add price real default 100;
+delete from books;
+delete from authors
+	
