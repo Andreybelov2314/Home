@@ -41,3 +41,99 @@ values
 ('44ed6df3-babb-4f16-86b8-1842062efc4d','ffdf32a8-9c45-4a65-ac68-aff467d1d809'),
 ('c4722852-ac56-4565-8b6a-376dbc55b33a','ffdf32a8-9c45-4a65-ac68-aff467d1d809');
 select * from Enrollments
+create table student
+(
+	id uuid default gen_random_uuid(),
+	name text,
+	study_group uuid references study_group(id),
+	head boolean,
+	primary key(id)
+);
+create table study_group
+(
+	id uuid default gen_random_uuid(),
+	name text unique,
+	primary key(id)
+);
+INSERT INTO study_group (name)
+VALUES
+('ИТ-101'),
+('ИТ-102'),
+('ЭКО-201'),
+('ФИЗ-301');
+
+INSERT INTO student (name, study_group, head)
+VALUES
+('Иванов Иван', (SELECT id FROM study_group WHERE name = 'ИТ-101'), true),
+('Петров Петр', (SELECT id FROM study_group WHERE name = 'ИТ-101'), false),
+('Сидорова Мария', (SELECT id FROM study_group WHERE name = 'ИТ-101'), false),
+('Смирнов Алексей', (SELECT id FROM study_group WHERE name = 'ИТ-102'), true),
+('Кузнецова Анна', (SELECT id FROM study_group WHERE name = 'ИТ-102'), false),
+('Васильев Дмитрий', (SELECT id FROM study_group WHERE name = 'ИТ-102'), false),
+('Федорова Елена', (SELECT id FROM study_group WHERE name = 'ЭКО-201'), true),
+('Николаев Сергей', (SELECT id FROM study_group WHERE name = 'ЭКО-201'), false),
+('Павлова Ольга', (SELECT id FROM study_group WHERE name = 'ФИЗ-301'), true),
+('Андреев Максим', (SELECT id FROM study_group WHERE name = 'ФИЗ-301'), false);
+select * from student;
+(
+	id uuid default gen_random_uuid(),
+	name text,
+	primary key(id)
+);
+create table classroom
+(
+	id uuid default gen_random_uuid(),
+	size boolean,
+	primary key(id)
+);
+INSERT INTO teacher (name)
+VALUES
+('Петров Александр Сергеевич'),
+('Иванова Мария Владимировна'),
+('Сидоров Дмитрий Николаевич'),
+('Кузнецова Елена Петровна'),
+('Васильев Игорь Олегович');
+INSERT INTO classroom (size)
+VALUES
+(true),
+(false),
+(true),
+(false),
+(true);
+create table scheldue
+(
+	studyGroup uuid references study_group(id),
+	classroom uuid references classroom(id),
+	teacher text references teacher (name),
+	time_start text
+);
+INSERT INTO schedule (studyGroup, classroom, teacher, time_start)
+VALUES
+((SELECT id FROM study_group WHERE name = 'ИТ-101'),
+ (SELECT id FROM classroom LIMIT 1 OFFSET 0),
+ (SELECT name FROM teacher LIMIT 1 OFFSET 0),
+ '09:00'),
+((SELECT id FROM study_group WHERE name = 'ИТ-102'),
+ (SELECT id FROM classroom LIMIT 1 OFFSET 1),
+ (SELECT name FROM teacher LIMIT 1 OFFSET 1),
+ '10:30'),
+((SELECT id FROM study_group WHERE name = 'ЭКО-201'),
+ (SELECT id FROM classroom LIMIT 1 OFFSET 2),
+ (SELECT name FROM teacher LIMIT 1 OFFSET 2),
+ '09:00'),
+((SELECT id FROM study_group WHERE name = 'ФИЗ-301'),
+ (SELECT id FROM classroom LIMIT 1 OFFSET 3),
+ (SELECT name FROM teacher LIMIT 1 OFFSET 3),
+ '13:00'),
+((SELECT id FROM study_group WHERE name = 'ИТ-101'),
+ (SELECT id FROM classroom LIMIT 1 OFFSET 4),
+ (SELECT name FROM teacher LIMIT 1 OFFSET 4),
+ '15:30'),
+((SELECT id FROM study_group WHERE name = 'ИТ-102'),
+ (SELECT id FROM classroom LIMIT 1 OFFSET 0),
+ (SELECT name FROM teacher LIMIT 1 OFFSET 0),
+ '11:00'),
+((SELECT id FROM study_group WHERE name = 'ЭКО-201'),
+ (SELECT id FROM classroom LIMIT 1 OFFSET 1),
+ (SELECT name FROM teacher LIMIT 1 OFFSET 1),
+ '14:00');
