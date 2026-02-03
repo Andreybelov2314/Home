@@ -1,0 +1,43 @@
+create table courses
+(
+	id uuid default gen_random_uuid(),
+	CourseName text,
+	Credits integer,
+	primary key(id)
+);
+insert into courses(CourseName, Credits)
+values
+('Информатика', 11),
+('История',5),
+('Математика',3);
+
+create table Enrollments
+(
+	StudentID uuid references student(id),
+	CourseID uuid references courses(id)
+);
+create table student
+(
+	id uuid default gen_random_uuid(),
+	name text,
+	birth_date date,
+	email text unique,
+	course_name text,
+	enrollment_date date,
+	primary key(id)
+);
+
+insert into student(name, birth_date,email,course_name,enrollment_date)
+values
+('Иванов Александр Сергеевич', '2000-05-15', 'ivanov.alex@university.ru', 'Информатика', '2021-09-01'),
+('Петрова Мария Дмитриевна', '2001-03-22', 'petrova.maria@university.ru', 'Математика', '2021-09-01'),
+('Сидоров Андрей Иванович', '1999-11-30', 'sidorov.andrey@university.ru', 'Физика', '2020-09-01'),
+('Кузнецова Елена Владимировна', '2002-07-10', 'kuznetsova.elena@university.ru', 'Биология', '2022-09-01'),
+('Смирнов Денис Олегович', '2000-12-05', 'smirnov.denis@university.ru', 'Химия', '2021-09-01'),
+('Васильева Ольга Петровна', '2001-08-18', 'vasilieva.olga@university.ru', 'Экономика', '2022-09-01'),
+('Попов Игорь Николаевич', '1998-02-28', 'popov.igor@university.ru', 'История', '2019-09-01');
+insert into Enrollments
+values
+('44ed6df3-babb-4f16-86b8-1842062efc4d','ffdf32a8-9c45-4a65-ac68-aff467d1d809'),
+('c4722852-ac56-4565-8b6a-376dbc55b33a','ffdf32a8-9c45-4a65-ac68-aff467d1d809');
+select * from Enrollments
